@@ -1,59 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-// Exemple de données de fragments
-const initialFragments = [
-  {
-    id: 1,
-    title: "React useState Hook",
-    code: `const [count, setCount] = useState(0);`,
-  },
-  {
-    id: 2,
-    title: "JavaScript Array Map",
-    code: `const squares = arr.map(num => num * num);`,
-  },
-  {
-    id: 3,
-    title: "CSS Flexbox Centering",
-    code: `display: flex;\njustify-content: center;\nalign-items: center;`,
-  }
-];
+export default function FragmentForm({ fragment }) {
+  const [title, setTitle] = useState('');
+  const [code, setCode] = useState('');
 
-export default function Fragments() {
-  const [fragments, setFragments] = useState(initialFragments);
-  const [selectedFragment, setSelectedFragment] = useState(null);
+  useEffect(() => {
+    if (fragment) {
+      setTitle(fragment.title);
+      setCode(fragment.code);
+    }
+  }, [fragment]);
 
-  // Ouvrir la modale pour afficher le code complet
-  const openModal = (fragment) => {
-    setSelectedFragment(fragment);
-  };
-
-  const closeModal = () => {
-    setSelectedFragment(null);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert(`Saved: ${title}\n${code}`);
   };
 
   return (
-    <div className="fragments-container">
-      <h2>My Code Fragments</h2>
-      <div className="fragments-list">
-        {fragments.map(fragment => (
-          <div key={fragment.id} className="fragment-card">
-            <h3>{fragment.title}</h3>
-            <p>{fragment.code.slice(0, 30)}...</p>
-            <button onClick={() => openModal(fragment)}>View Code</button>
-          </div>
-        ))}
-      </div>
-
-      {selectedFragment && (
-        <div className="modal">
-          <div className="modal-content">
-            <h3>{selectedFragment.title}</h3>
-            <pre>{selectedFragment.code}</pre>
-            <button onClick={closeModal}>Close</button>
-          </div>
-        </div>
-      )}
+    <div className="form-container">
+      <h2>{fragment ? 'Edit Fragment' : 'New Fragment'}</h2>
+      <form onSubmit={handleSubmit}>
+        <label>Title</label>
+        <input value={title} onChange={e => setTitle(e.target.value)} />
+        <label>Code</label>
+        <textarea value={code} onChange={e => setCode(e.target.value)} />
+        <button type="submit">Save</button>
+      </form>
     </div>
-  )
+  );
 }
