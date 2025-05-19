@@ -1,31 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-export default function FragmentForm({ fragment }) {
-  const [title, setTitle] = useState('');
-  const [code, setCode] = useState('');
+export default function Fragments({ fragments, onDelete, onEdit }) {
+  const [activeIndex, setActiveIndex] = useState(null);
 
-  useEffect(() => {
-    if (fragment) {
-      setTitle(fragment.title);
-      setCode(fragment.code);
-    }
-  }, [fragment]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert(`Saved: ${title}\n${code}`);
+  const handleCopy = (code) => {
+    navigator.clipboard.writeText(code)
+      .then(() => alert('Code copied to clipboard!'))
+      .catch(() => alert('Failed to copy code'));
   };
 
   return (
-    <div className="form-container">
-      <h2>{fragment ? 'Edit Fragment' : 'New Fragment'}</h2>
-      <form onSubmit={handleSubmit}>
-        <label>Title</label>
-        <input value={title} onChange={e => setTitle(e.target.value)} />
-        <label>Code</label>
-        <textarea value={code} onChange={e => setCode(e.target.value)} />
-        <button type="submit">Save</button>
-      </form>
+    <div className="fragments-container">
+      <h2>Fragments List</h2>
+
+      {fragments.length === 0 ? (
+        <p>No fragments yet.</p>
+      ) : (
+        <ul className="fragment-list">
+          {fragments.map((frag, i) => (
+            <li key={i} className="fragment-item" style={{ borderBottom: '1px solid #ccc', padding: '1rem' }}>
+              <div className="fragment-header" style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <strong>{frag.title}</strong>
+                <button onClick={() => setActiveIndex(activeIndex === i ? null : i)}>
+                  {activeIndex === i ? 'Hide' : '👁 View'}
+                </button>
+              </div>
+
+              {activeIndex === i && (
+                <>
+                 
+                  <div className="fragment-actions" style={{ marginTop: '10px' }}>
+                    <button onClick={() => handleCopy(frag.code)}>📋 Copy</button>
+                    <button onClick={() => onEdit(i)}>✏️ Edit</button>
+                    <button onClick={() => onDelete(i)}>🗑 Delete</button>
+                    <button onClick={() => setActiveIndex(null)}>❌ Cancel</button>
+                  </div>
+                </>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

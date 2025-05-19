@@ -21,10 +21,12 @@ export default function Tags() {
   const handleSave = () => {
     if (selectedTag.trim() === '') return;
     if (editIndex !== null) {
-      const updated = [...tags];
-      updated[editIndex] = selectedTag.trim();
-      setTags(updated);
+      // Modifier un tag existant
+      const updatedTags = [...tags];
+      updatedTags[editIndex] = selectedTag.trim();
+      setTags(updatedTags);
     } else {
+      // Ajouter un nouveau tag
       setTags([...tags, selectedTag.trim()]);
     }
     closeModal();
@@ -32,8 +34,8 @@ export default function Tags() {
 
   const handleDelete = () => {
     if (editIndex !== null) {
-      const updated = tags.filter((_, i) => i !== editIndex);
-      setTags(updated);
+      const updatedTags = tags.filter((_, i) => i !== editIndex);
+      setTags(updatedTags);
       closeModal();
     }
   };
@@ -62,6 +64,7 @@ export default function Tags() {
               value={selectedTag}
               onChange={(e) => setSelectedTag(e.target.value)}
               placeholder="Tag name"
+              autoFocus
             />
             <div className="modal-actions">
               <button onClick={handleSave}>Save</button>
