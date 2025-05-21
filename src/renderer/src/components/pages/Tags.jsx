@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 export default function Tags() {
-  const [tags, setTags] = useState(['React', 'Firebase', 'CSS']);
+  const [tags, setTags] = useState([]); // Liste vide par défaut
   const [selectedTag, setSelectedTag] = useState('');
   const [editIndex, setEditIndex] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -21,12 +21,10 @@ export default function Tags() {
   const handleSave = () => {
     if (selectedTag.trim() === '') return;
     if (editIndex !== null) {
-      // Modifier un tag existant
       const updatedTags = [...tags];
       updatedTags[editIndex] = selectedTag.trim();
       setTags(updatedTags);
     } else {
-      // Ajouter un nouveau tag
       setTags([...tags, selectedTag.trim()]);
     }
     closeModal();

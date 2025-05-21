@@ -1,198 +1,34 @@
-/* @import './base.css';
-
-body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  background-image: url('./wavy-lines.svg');
-  background-size: cover;
-  user-select: none;
-}
-
-code {
-  font-weight: 600;
-  padding: 3px 5px;
-  border-radius: 2px;
-  background-color: var(--color-background-mute);
-  font-family:
-    ui-monospace,
-    SFMono-Regular,
-    SF Mono,
-    Menlo,
-    Consolas,
-    Liberation Mono,
-    monospace;
-  font-size: 85%;
-}
-
-#root {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  margin-bottom: 80px;
-}
-
-.logo {
-  margin-bottom: 20px;
-  -webkit-user-drag: none;
-  height: 128px;
-  width: 128px;
-  will-change: filter;
-  transition: filter 300ms;
-}
-
-.logo:hover {
-  filter: drop-shadow(0 0 1.2em #6988e6aa);
-}
-
-.creator {
-  font-size: 14px;
-  line-height: 16px;
-  color: var(--ev-c-text-2);
-  font-weight: 600;
-  margin-bottom: 10px;
-}
-
-.text {
-  font-size: 28px;
-  color: var(--ev-c-text-1);
-  font-weight: 700;
-  line-height: 32px;
-  text-align: center;
-  margin: 0 10px;
-  padding: 16px 0;
-}
-
-.tip {
-  font-size: 16px;
-  line-height: 24px;
-  color: var(--ev-c-text-2);
-  font-weight: 600;
-}
-
-.react {
-  background: -webkit-linear-gradient(315deg, #087ea4 55%, #7c93ee);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-weight: 700;
-}
-
-.actions {
-  display: flex;
-  padding-top: 32px;
-  margin: -6px;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-}
-
-.action {
-  flex-shrink: 0;
-  padding: 6px;
-}
-
-.action a {
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-block;
-  border: 1px solid transparent;
-  text-align: center;
-  font-weight: 600;
-  white-space: nowrap;
-  border-radius: 20px;
-  padding: 0 20px;
-  line-height: 38px;
-  font-size: 14px;
-  border-color: var(--ev-button-alt-border);
-  color: var(--ev-button-alt-text);
-  background-color: var(--ev-button-alt-bg);
-}
-
-.action a:hover {
-  border-color: var(--ev-button-alt-hover-border);
-  color: var(--ev-button-alt-hover-text);
-  background-color: var(--ev-button-alt-hover-bg);
-}
-
-.versions {
-  position: absolute;
-  bottom: 30px;
-  margin: 0 auto;
-  padding: 15px 0;
-  font-family: 'Menlo', 'Lucida Console', monospace;
-  display: inline-flex;
-  overflow: hidden;
-  align-items: center;
-  border-radius: 22px;
-  background-color: #202127;
-  backdrop-filter: blur(24px);
-}
-
-.versions li {
-  display: block;
-  float: left;
-  border-right: 1px solid var(--ev-c-gray-1);
-  padding: 0 20px;
-  font-size: 14px;
-  line-height: 14px;
-  opacity: 0.8;
-  &:last-child {
-    border: none;
-  }
-}
-
-@media (max-width: 720px) {
-  .text {
-    font-size: 20px;
-  }
-}
-
-@media (max-width: 620px) {
-  .versions {
-    display: none;
-  }
-}
-
-@media (max-width: 350px) {
-  .tip,
-  .actions {
-    display: none;
-  }
-} */
-
-
-/* typo */
+/* Global font-family on body already set */
 body {
   font-family: 'Montserrat', sans-serif;
   background-color: #ffffff;
   color: #333333;
   margin: 0;
-  padding: 0;
+  padding: 20px;
 }
 
-/* css for header */
+/* Header */
 .header {
-    font-family: 'Montserrat', sans-serif;
-
+  font-family: 'Montserrat', sans-serif;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #333333;
   padding: 10px 20px;
-  color: white;
+  color: #FFFFFF;
 }
 
 .logo {
+  font-family: 'Montserrat', sans-serif;
   font-size: 20px;
   cursor: pointer;
   font-weight: bold;
 }
 
 .nav button {
+  font-family: 'Montserrat', sans-serif;
   background: transparent;
-  color: white;
+  color: #FFFFFF;
   border: none;
   margin-left: 10px;
   font-size: 14px;
@@ -205,21 +41,19 @@ body {
   border-radius: 4px;
 }
 
-
-
- /* fragment form css */
-
- .form-container {
+/* Fragment form */
+.form-container {
+  font-family: 'Montserrat', sans-serif;
   max-width: 600px;
   margin: 40px auto;
   padding: 6px;
   background-color: #ffffff;
   color: #333333;
-  font-family: 'Montserrat', sans-serif;
   border-radius: 8px;
 }
 
 .form-container h2 {
+  font-family: 'Montserrat', sans-serif;
   text-align: center;
   margin-bottom: 20px;
   color: #333333;
@@ -232,6 +66,7 @@ body {
 }
 
 label {
+  font-family: 'Montserrat', sans-serif;
   display: flex;
   flex-direction: column;
   font-weight: 600;
@@ -240,12 +75,12 @@ label {
 
 input,
 textarea {
+  font-family: 'Montserrat', sans-serif;
   margin-top: 8px;
   padding: 10px;
   border: 1px solid #FFFFFF;
   border-radius: 6px;
   font-size: 1rem;
-  font-family: 'Montserrat', sans-serif;
   color: #333333;
   resize: vertical;
 }
@@ -254,10 +89,11 @@ input:focus,
 textarea:focus {
   outline: none;
   border-color: #B288C0;
-  box-shadow: 0 0 0 2px rgba(154, 72, 208, 0.2);
+  box-shadow: 0 0 0 2px #333333;
 }
 
 button {
+  font-family: 'Montserrat', sans-serif;
   background-color: #B288C0;
   color: white;
   font-size: 1rem;
@@ -273,12 +109,10 @@ button:hover {
   background-color: #7BC950;
 }
 
-
-/* css Tags */
-
+/* Tags */
 .tags-container {
-  padding: 2rem;
   font-family: 'Montserrat', sans-serif;
+  padding: 2rem;
 }
 
 .tags-list {
@@ -289,6 +123,7 @@ button:hover {
 }
 
 .tag-chip {
+  font-family: 'Montserrat', sans-serif;
   background-color: #B288C0;
   color: white;
   padding: 0.5rem 1rem;
@@ -299,6 +134,7 @@ button:hover {
 }
 
 .tag-chip button {
+  font-family: 'Montserrat', sans-serif;
   background: transparent;
   border: none;
   color: #FFFFFF;
@@ -306,6 +142,7 @@ button:hover {
 }
 
 .new-tag-button {
+  font-family: 'Montserrat', sans-serif;
   background-color: #7BC950;
   padding: 0.5rem 1rem;
   border: none;
@@ -315,7 +152,9 @@ button:hover {
   font-weight: 600;
 }
 
+/* Modal */
 .modal {
+  font-family: 'Montserrat', sans-serif;
   position: fixed;
   top: 0;
   left: 0;
@@ -328,6 +167,7 @@ button:hover {
 }
 
 .modal-content {
+  font-family: 'Montserrat', sans-serif;
   background: #FFFFFF;
   padding: 2rem;
   border-radius: 8px;
@@ -335,56 +175,45 @@ button:hover {
 }
 
 .modal-actions {
+  font-family: 'Montserrat', sans-serif;
   display: flex;
   gap: 0.5rem;
   margin-top: 1rem;
 }
 
 .modal-actions button {
+  font-family: 'Montserrat', sans-serif;
   padding: 0.5rem 1rem;
   cursor: pointer;
-  font-family: 'Montserrat', sans-serif;
 }
 
 .delete-button {
+  font-family: 'Montserrat', sans-serif;
   background-color: #7BC950;
   color: #FFFFFF;
 }
- /* CSS bouton tag */
 
- .tag-form-section {
+/* Tag Form Section */
+.tag-form-section {
+  font-family: 'Montserrat', sans-serif;
   margin-bottom: 20px;
 }
 
 button[type="submit"] {
+  font-family: 'Montserrat', sans-serif;
   margin-top: 20px;
   padding: 10px 20px;
-  background-color: #9A48D0;
-  color: white;
+  background-color: #B288C0;
+  color: #FFFFFF;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  font-family: 'Montserrat', sans-serif;
   font-weight: bold;
 }
 
-
-
-
-
-/*Css fragment */
-
-body {
-  font-family: 'Montserrat', sans-serif;
-  background-color: #ffffff;
-  color: #333333;
-  margin: 0;
-  padding: 20px;
-}
-
-/* === Layout Fragments === */
-
+/* Fragments */
 .fragments-container {
+  font-family: 'Montserrat', sans-serif;
   max-width: 500px;
   margin: 0 auto;
 }
@@ -395,7 +224,8 @@ body {
 }
 
 .fragment-item {
-  border: 1px solid #ddd;
+  font-family: 'Montserrat', sans-serif;
+  border: 1px solid #FFFFFF;
   border-radius: 10px;
   padding: 15px;
   margin-bottom: 20px;
@@ -404,27 +234,29 @@ body {
 }
 
 .fragment-item:hover {
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 6px #333333;
 }
 
 .fragment-header {
+  font-family: 'Montserrat', sans-serif;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .fragment-actions {
+  font-family: 'Montserrat', sans-serif;
   margin-top: 10px;
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
 }
 
-/* === Boutons === */
-
+/* Buttons */
 button {
+  font-family: 'Montserrat', sans-serif;
   background-color: #7BC950;
-  color: white;
+  color: #FFFFFF;
   border: none;
   padding: 4px 10px;
   border-radius: 5px;
@@ -434,37 +266,40 @@ button {
 }
 
 button:hover {
-  background-color: #66aa42;
+  background-color: #7BC950;
 }
 
-/* 👁 Bouton view */
+/* View Button */
 .fragment-header button {
-  background-color: #9A48D0;
+  font-family: 'Montserrat', sans-serif;
+  background-color: #B288C0;
   font-size: 0.8rem;
   padding: 3px 8px;
 }
 
-/* === Formulaire === */
-
+/* Form */
 .form-container {
+  font-family: 'Montserrat', sans-serif;
   max-width: 700px;
   margin: 0 auto;
 }
 
 .fragment-form label {
+  font-family: 'Montserrat', sans-serif;
   display: block;
   margin-bottom: 10px;
   font-weight: 600;
 }
 
-input, textarea {
+input,
+textarea {
+  font-family: 'Montserrat', sans-serif;
   width: 100%;
   padding: 8px;
   margin-top: 5px;
   margin-bottom: 15px;
-  border: 1px solid #ccc;
+  border: 1px solid #FFFFFF;
   border-radius: 4px;
-  font-family: 'Montserrat', sans-serif;
   font-size: 0.95rem;
 }
 
@@ -472,14 +307,68 @@ textarea {
   resize: vertical;
 }
 
-/* === Tag Toggle === */
-
+/* Tag Toggle */
 .tag-toggle {
+  font-family: 'Montserrat', sans-serif;
   background: none;
-  color: #9A48D0;
+  color: #B288C0;
   border: none;
   font-weight: bold;
   cursor: pointer;
   padding: 0;
   font-size: 0.9rem;
+}
+
+/* Modal Delete */
+.modal-overlay {
+  font-family: 'Montserrat', sans-serif;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #333333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #FFFFFF;
+  padding: 20px 30px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 2px 10px #333333;
+  text-align: center;
+}
+
+.modal-actions {
+  font-family: 'Montserrat', sans-serif;
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal-btn {
+  font-family: 'Montserrat', sans-serif;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.confirm-btn {
+  font-family: 'Montserrat', sans-serif;
+  color: white;
+}
+
+.cancel-btn {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #FFFFFF;
+  color: #333333;
 }
