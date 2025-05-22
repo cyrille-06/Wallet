@@ -6,10 +6,11 @@
   "author": "example.com",
   "homepage": "https://electron-vite.org",
   "scripts": {
+    "type": "module",
     "format": "prettier --write .",
     "lint": "eslint --cache .",
     "start": "electron-vite preview",
-    "dev": "electron-vite dev",
+    "dev": "electron-vite dev -w",
     "build": "electron-vite build",
     "postinstall": "electron-builder install-app-deps",
     "build:unpack": "npm run build && electron-builder --dir",
@@ -20,6 +21,7 @@
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.1",
     "@electron-toolkit/utils": "^4.0.0",
+    "electron-store": "^10.0.1",
     "node-json-db": "^2.3.1",
     "react-router-dom": "^7.6.0"
   },
