@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function FragmentForm({ onSubmit, initialData = {} }) {
-  // États pour stocker le titre, le code, et le nom du tag (optionnel)
+  // États pour stocker le titre, le code, et le nom du tag 
   // initialData permet de pré-remplir le formulaire en cas d'édition
   const [title, setTitle] = useState(initialData.title || '');
   const [code, setCode] = useState(initialData.code || '');
