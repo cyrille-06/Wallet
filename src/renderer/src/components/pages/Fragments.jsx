@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 export default function Fragments({ fragments, onDelete, onEdit }) {
-  // Index du fragment actuellement ouvert (affiché en détail)
+  // Index du fragment actuellement ouvert 
   const [activeIndex, setActiveIndex] = useState(null);
 
   // Booléen pour gérer l'affichage de la modale de confirmation suppression
