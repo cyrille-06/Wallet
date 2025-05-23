@@ -6,10 +6,7 @@ export function initDarkMode() {
   document.documentElement.setAttribute('data-theme', theme) // Applique le thème
 }
 
-/**
- * Bascule entre le mode sombre et clair.
- * Met à jour l'attribut `data-theme` et sauvegarde le choix dans localStorage.
- */
+
 export function toggleDarkMode() {
   const current = document.documentElement.getAttribute('data-theme') // Thème actuel
   const newTheme = current === 'dark' ? 'light' : 'dark' // Inverse le thème
