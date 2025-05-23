@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 export default function Tags() {
-  // État pour stocker la liste des tags (initialement vide)
+  // État pour stocker la liste des tags 
   const [tags, setTags] = useState([]);
   
   // État pour stocker le tag en cours d'édition ou création dans la modale
