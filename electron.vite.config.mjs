@@ -4,24 +4,10 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   main: {
-    plugins: [externalizeDepsPlugin()],
-    build: {
-      rollupOptions: {
-        output: {
-          format: 'es'
-        }
-      }
-    }
+    plugins: [externalizeDepsPlugin()]
   },
   preload: {
-    plugins: [externalizeDepsPlugin()],
-    build: {
-      rollupOptions: {
-        output: {
-          format: 'es'
-        }
-      }
-    }
+    plugins: [externalizeDepsPlugin()]
   },
   renderer: {
     resolve: {

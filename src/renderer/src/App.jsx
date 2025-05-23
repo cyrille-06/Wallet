@@ -1,66 +1,88 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Fragments from './components/pages/Fragments';
 import Tags from './components/pages/Tags';
 import Info from './components/pages/Info';
 import FragmentForm from './components/pages/FragmentsForm';
 
+// Composant principal qui gère l'état global (fragments, dark mode)
 function App() {
+  // Liste des fragments stockée dans le state
   const [fragments, setFragments] = useState([]);
-  const [editingIndex, setEditingIndex] = useState(null);
+  // Etat du mode sombre activé ou non
   const [darkMode, setDarkMode] = useState(false);
-  const navigate = useNavigate();
 
-  // Appliquer ou retirer la classe 'dark' sur le body selon darkMode
+  // Effet qui applique ou enlève la classe 'dark' sur le body en fonction de darkMode
   useEffect(() => {
-    if (darkMode) {
-      document.body.classList.add('dark');
-    } else {
-      document.body.classList.remove('dark');
-    }
+    document.body.classList.toggle('dark', darkMode);
   }, [darkMode]);
 
-  const handleNavigation = (path) => {
-    navigate(`/${path}`);
-  };
-
-  const handleAddFragment = (fragment) => {
-    if (editingIndex !== null) {
-      const updated = [...fragments];
-      updated[editingIndex] = fragment;
-      setFragments(updated);
-      setEditingIndex(null);
-    } else {
-      setFragments((prev) => [...prev, fragment]);
-    }
-    navigate('/fragments');
-  };
-
-  const handleDelete = (index) => {
-    const updated = [...fragments];
-    updated.splice(index, 1);
-    setFragments(updated);
-  };
-
-  const handleEdit = (index) => {
-    setEditingIndex(index);
-    navigate('/new');
-  };
-
+  // Fonction pour basculer entre mode clair / sombre
   const toggleDarkMode = () => {
     setDarkMode((prev) => !prev);
   };
 
   return (
     <div>
+      {/* On délègue la logique nécessitant useNavigate dans AppContent */}
+      <AppContent
+        fragments={fragments}
+        setFragments={setFragments}
+        darkMode={darkMode}
+        toggleDarkMode={toggleDarkMode}
+      />
+    </div>
+  );
+}
+
+// Composant enfant direct de BrowserRouter pour utiliser useNavigate et useLocation
+function AppContent({ fragments, setFragments, darkMode, toggleDarkMode }) {
+  const navigate = useNavigate(); // Hook React Router pour naviguer programmatique
+  const location = useLocation(); // Hook React Router pour obtenir la location courante
+
+  // Fonction de navigation appelée par le header (boutons)
+  const handleNavigation = (path) => {
+    navigate(`/${path}`);
+  };
+
+  // Ajoute un nouveau fragment ou modifie un fragment existant (édition)
+  const handleAddFragment = (fragment, index = null) => {
+    if (index !== null) {
+      const updated = [...fragments];
+      updated[index] = fragment;
+      setFragments(updated);
+    } else {
+      setFragments((prev) => [...prev, fragment]);
+    }
+    // Retour à la liste des fragments après ajout ou modification
+    navigate('/fragments');
+  };
+
+  // Supprime un fragment donné par son index
+  const handleDelete = (index) => {
+    const updated = [...fragments];
+    updated.splice(index, 1);
+    setFragments(updated);
+  };
+
+  // Prépare l'édition d'un fragment : navigation vers formulaire avec état du fragment à modifier
+  const handleEdit = (index) => {
+    const fragToEdit = fragments[index];
+    navigate('/new', { state: { ...fragToEdit, index } });
+  };
+
+  return (
+    <>
+      {/* Header avec navigation et toggle dark mode */}
       <Header
         onNavigate={handleNavigation}
         darkMode={darkMode}
         onToggleDarkMode={toggleDarkMode}
       />
 
-      <Routes>
+      {/* Routes pour afficher les pages selon l'URL */}
+      <Routes location={location}>
         <Route
           path="/fragments"
           element={
@@ -74,19 +96,15 @@ function App() {
         <Route path="/tags" element={<Tags />} />
         <Route
           path="/new"
-          element={
-            <FragmentForm
-              onSubmit={handleAddFragment}
-              initialData={editingIndex !== null ? fragments[editingIndex] : {}}
-            />
-          }
+          element={<FragmentForm onSubmit={handleAddFragment} />}
         />
         <Route path="/info" element={<Info />} />
       </Routes>
-    </div>
+    </>
   );
 }
 
+// Wrapper qui enveloppe l'app dans le BrowserRouter
 export default function AppWrapper() {
   return (
     <BrowserRouter>
