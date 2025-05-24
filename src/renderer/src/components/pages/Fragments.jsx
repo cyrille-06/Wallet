@@ -1,21 +1,16 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-<<<<<<< HEAD
 // Composant qui affiche la liste des fragments avec options : afficher, copier, éditer, supprimer
-export default function Fragments({ fragments, onDelete }) {
-  // Index du fragment actuellement affiché (null si aucun)
-=======
 export default function Fragments({ fragments, onDelete, onEdit }) {
-  // Index du fragment actuellement ouvert 
->>>>>>> 660d37765c3e8fdd165ac444808317d7b754a016
+  // Index du fragment actuellement ouvert (null si aucun)
   const [activeIndex, setActiveIndex] = useState(null);
   // Contrôle de l'affichage de la modale de confirmation de suppression
   const [modalOpen, setModalOpen] = useState(false);
   // Index du fragment sélectionné pour suppression
   const [deleteIndex, setDeleteIndex] = useState(null);
 
-  const navigate = useNavigate(); // Permet de naviguer vers une autre route (édition)
+  const navigate = useNavigate();
 
   // Copie le code d’un fragment dans le presse-papiers
   const handleCopy = (code) => {
@@ -39,9 +34,9 @@ export default function Fragments({ fragments, onDelete, onEdit }) {
   // Supprime le fragment après confirmation
   const confirmDelete = () => {
     if (deleteIndex !== null) {
-      onDelete(deleteIndex);         // Appelle la fonction de suppression passée en props
-      setActiveIndex(null);          // Cache le fragment s’il était affiché
-      closeModal();                  // Ferme la modale
+      onDelete(deleteIndex);
+      setActiveIndex(null);
+      closeModal();
     }
   };
 
@@ -50,13 +45,14 @@ export default function Fragments({ fragments, onDelete, onEdit }) {
     navigate('/new', {
       state: { ...fragment, index }
     });
+    // Optionnel : appeler aussi la prop onEdit si tu veux faire autre chose
+    if (onEdit) onEdit(fragment, index);
   };
 
   return (
     <div className="fragments-container">
       <h2>Fragments List</h2>
 
-      {/* Si aucun fragment, on affiche un message */}
       {fragments.length === 0 ? (
         <p>No fragments yet!</p>
       ) : (
@@ -67,7 +63,6 @@ export default function Fragments({ fragments, onDelete, onEdit }) {
               className="fragment-item"
               style={{ borderBottom: '1px solid #ccc', padding: '1rem' }}
             >
-              {/* En-tête du fragment : titre + bouton pour afficher/masquer */}
               <div className="fragment-header" style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <strong>{frag.title}</strong>
                 <button onClick={() => setActiveIndex(activeIndex === i ? null : i)}>
@@ -75,7 +70,6 @@ export default function Fragments({ fragments, onDelete, onEdit }) {
                 </button>
               </div>
 
-              {/* Affiche le code si le fragment est actif */}
               {activeIndex === i && (
                 <>
                   <pre style={{
@@ -88,7 +82,6 @@ export default function Fragments({ fragments, onDelete, onEdit }) {
                     {frag.code}
                   </pre>
 
-                  {/* Tag associé au fragment s’il existe */}
                   {frag.tag && (
                     <button
                       className="tag-button"
@@ -99,7 +92,6 @@ export default function Fragments({ fragments, onDelete, onEdit }) {
                     </button>
                   )}
 
-                  {/* Actions disponibles pour ce fragment */}
                   <div
                     className="fragment-actions"
                     style={{ marginTop: '10px', display: 'flex', gap: '10px' }}
@@ -116,7 +108,6 @@ export default function Fragments({ fragments, onDelete, onEdit }) {
         </ul>
       )}
 
-      {/* Modale de confirmation pour suppression */}
       {modalOpen && (
         <div className="modal-overlay">
           <div className="modal-content">

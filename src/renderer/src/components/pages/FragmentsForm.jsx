@@ -1,41 +1,32 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-export default function FragmentForm({ onSubmit, initialData = {} }) {
-  // États pour stocker le titre, le code, et le nom du tag 
-  // initialData permet de pré-remplir le formulaire en cas d'édition
-  const [title, setTitle] = useState(initialData.title || '');
-  const [code, setCode] = useState(initialData.code || '');
-  const [tagName, setTagName] = useState(initialData.tagName || '');
-  
-  // Booléen pour afficher ou cacher le formulaire du tag
-  const [showTagForm, setShowTagForm] = useState(false);
+export default function FragmentForm({ onSubmit }) {
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  // Données initiales en cas de modification (sinon objet vide)
+  // On récupère les données passées en state (édition) ou un objet vide
   const initialData = location.state || {};
 
-  // États du formulaire
-  const [title, setTitle] = useState(initialData.title || '');         // Titre du fragment
-  const [code, setCode] = useState(initialData.code || '');            // Contenu du code
-  const [tagName, setTagName] = useState(initialData.tag || '');       // Tag associé
-  const [showTagForm, setShowTagForm] = useState(!!initialData.tag);   // Affichage du champ tag
+  // États du formulaire initialisés avec les données existantes ou vides
+  const [title, setTitle] = useState(initialData.title || '');
+  const [code, setCode] = useState(initialData.code || '');
+  const [tagName, setTagName] = useState(initialData.tag || '');
+  const [showTagForm, setShowTagForm] = useState(!!initialData.tag);
 
-  // Gère la soumission du formulaire
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Vérifie que les champs obligatoires ne sont pas vides
     if (title.trim() && code.trim()) {
       const data = { title, code };
 
-      // Si un tag est présent, on l’ajoute à l’objet à soumettre
       if (tagName.trim()) {
         data.tag = tagName.trim();
       }
 
-      const index = initialData.index;   // Permet de savoir si on édite un fragment existant
-      onSubmit(data, index);             // Appelle la fonction de soumission (prop)
-      navigate('/fragments');            // Redirige vers la liste après soumission
+      const index = initialData.index; // null ou index si édition
+      onSubmit(data, index);
+      navigate('/fragments');
     }
   };
 
@@ -43,9 +34,7 @@ export default function FragmentForm({ onSubmit, initialData = {} }) {
     <div className="form-container">
       <h2>{initialData.title ? "Edit Fragment" : "Add New Fragment"}</h2>
 
-      {/* Formulaire principal */}
       <form onSubmit={handleSubmit} className="fragment-form">
-        {/* Champ titre */}
         <label>
           Title:
           <input
@@ -57,7 +46,6 @@ export default function FragmentForm({ onSubmit, initialData = {} }) {
           />
         </label>
 
-        {/* Champ code */}
         <label>
           Code:
           <textarea
@@ -69,7 +57,6 @@ export default function FragmentForm({ onSubmit, initialData = {} }) {
           />
         </label>
 
-        {/* Bouton pour afficher ou masquer le champ tag */}
         <div style={{ marginTop: '10px' }}>
           <button
             type="button"
@@ -87,7 +74,6 @@ export default function FragmentForm({ onSubmit, initialData = {} }) {
           </button>
         </div>
 
-        {/* Champ tag, affiché uniquement si activé */}
         {showTagForm && (
           <label>
             Tag Name:
@@ -100,9 +86,8 @@ export default function FragmentForm({ onSubmit, initialData = {} }) {
           </label>
         )}
 
-        {/* Bouton de soumission */}
         <button type="submit">
-          {initialData.title ? "Save" : "Save"}
+          Save
         </button>
       </form>
     </div>
