@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-// Composant de formulaire pour ajouter ou éditer un fragment de code
-export default function FragmentForm({ onSubmit }) {
-  const navigate = useNavigate();      // Permet la redirection après soumission
-  const location = useLocation();      // Récupère les données passées par navigation (state)
+export default function FragmentForm({ onSubmit, initialData = {} }) {
+  // États pour stocker le titre, le code, et le nom du tag 
+  // initialData permet de pré-remplir le formulaire en cas d'édition
+  const [title, setTitle] = useState(initialData.title || '');
+  const [code, setCode] = useState(initialData.code || '');
+  const [tagName, setTagName] = useState(initialData.tagName || '');
+  
+  // Booléen pour afficher ou cacher le formulaire du tag
+  const [showTagForm, setShowTagForm] = useState(false);
 
   // Données initiales en cas de modification (sinon objet vide)
   const initialData = location.state || {};

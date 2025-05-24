@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+<<<<<<< HEAD
 // Composant qui affiche la liste des fragments avec options : afficher, copier, éditer, supprimer
 export default function Fragments({ fragments, onDelete }) {
   // Index du fragment actuellement affiché (null si aucun)
+=======
+export default function Fragments({ fragments, onDelete, onEdit }) {
+  // Index du fragment actuellement ouvert 
+>>>>>>> 660d37765c3e8fdd165ac444808317d7b754a016
   const [activeIndex, setActiveIndex] = useState(null);
   // Contrôle de l'affichage de la modale de confirmation de suppression
   const [modalOpen, setModalOpen] = useState(false);
