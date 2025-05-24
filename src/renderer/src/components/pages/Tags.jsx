@@ -1,37 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function Tags() {
-  // État pour stocker la liste des tags 
-  const [tags, setTags] = useState([]);
-  
-  // État pour stocker le tag en cours d'édition ou création dans la modale
+  // Initialisation des tags depuis localStorage (ou tableau vide si rien)
+  const [tags, setTags] = useState(() => {
+    const saved = localStorage.getItem('tags');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  // Tag en cours d'édition ou création
   const [selectedTag, setSelectedTag] = useState('');
-  
-  // Index du tag édité dans la liste, null si nouveau tag
+
+  // Index du tag édité, null si nouveau tag
   const [editIndex, setEditIndex] = useState(null);
-  
-  // Booléen pour afficher ou non la modale
+
+  // Booléen pour afficher la modale
   const [modalOpen, setModalOpen] = useState(false);
 
-  // Ouvre la modale, en mettant en place les valeurs pour édition ou création
-  // tag = tag à éditer (ou '' pour nouveau), index = position dans le tableau
+  // Sauvegarde automatique dans localStorage à chaque changement de tags
+  useEffect(() => {
+    localStorage.setItem('tags', JSON.stringify(tags));
+  }, [tags]);
+
+  // Ouvre la modale et prépare le tag pour édition ou création
   const openModal = (tag = '', index = null) => {
     setSelectedTag(tag);
     setEditIndex(index);
     setModalOpen(true);
   };
 
-  // Ferme la modale et réinitialise les états liés à l'édition
+  // Ferme la modale et reset les champs d'édition
   const closeModal = () => {
     setSelectedTag('');
     setEditIndex(null);
     setModalOpen(false);
   };
 
-  // Sauvegarde le tag : soit mise à jour soit ajout
+  // Enregistre un nouveau tag ou met à jour un tag existant
   const handleSave = () => {
-    if (selectedTag.trim() === '') return; // Ignore si vide
-    
+    if (selectedTag.trim() === '') return; // ignore si vide
+
     if (editIndex !== null) {
       // Mise à jour du tag existant
       const updatedTags = [...tags];
@@ -44,7 +51,7 @@ export default function Tags() {
     closeModal();
   };
 
-  // Supprime un tag selon son index dans la liste
+  // Supprime un tag par son index
   const handleDelete = () => {
     if (editIndex !== null) {
       const updatedTags = tags.filter((_, i) => i !== editIndex);
@@ -57,7 +64,7 @@ export default function Tags() {
     <div className="tags-container">
       <h2>Tags</h2>
 
-      {/* Liste des tags affichée avec bouton éditer */}
+      {/* Liste des tags avec bouton d'édition */}
       <div className="tags-list">
         {tags.map((tag, index) => (
           <div key={index} className="tag-chip">
@@ -65,6 +72,7 @@ export default function Tags() {
             <button onClick={() => openModal(tag, index)}>Edit</button>
           </div>
         ))}
+
         {/* Bouton pour créer un nouveau tag */}
         <button className="new-tag-button" onClick={() => openModal()}>
           + New Tag
@@ -85,9 +93,10 @@ export default function Tags() {
             />
             <div className="modal-actions">
               <button onClick={handleSave}>Save</button>
-              {/* Bouton supprimer visible uniquement en édition */}
               {editIndex !== null && (
-                <button onClick={handleDelete} className="delete-button">Delete</button>
+                <button onClick={handleDelete} className="delete-button">
+                  Delete
+                </button>
               )}
               <button onClick={closeModal}>Cancel</button>
             </div>

@@ -1,65 +1,83 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// Composant affichant la liste des fragments, avec options pour copier, éditer et supprimer
+
 export default function Fragments({ fragments, onDelete }) {
-  // Index du fragment actuellement ouvert (affiché en détail)
+  // Index du fragment actuellement développé (affiché en détail), ou null si aucun
   const [activeIndex, setActiveIndex] = useState(null);
 
-  // Contrôle l'affichage de la modale de confirmation de suppression
+  // Booléen qui contrôle l'affichage de la modale de confirmation de suppression
   const [modalOpen, setModalOpen] = useState(false);
 
-  // Stocke l'index du fragment sélectionné pour suppression
+  // Index du fragment sélectionné pour suppression dans la modale, ou null si aucun
   const [deleteIndex, setDeleteIndex] = useState(null);
 
-  // Hook React Router pour naviguer vers la page d'édition
+  // Hook React Router pour naviguer entre les pages
   const navigate = useNavigate();
 
-  // Fonction pour copier le code dans le presse-papier
+  /**
+   * Copie le code passé en argument dans le presse-papier.
+   * Affiche une alerte selon succès ou échec.
+   * @param {string} code 
+   */
   const handleCopy = (code) => {
     navigator.clipboard.writeText(code)
-      .then(() => alert('Code copied to clipboard!')) // succès
-      .catch(() => alert('Failed to copy code')); // échec
+      .then(() => alert('Code copied to clipboard!'))
+      .catch(() => alert('Failed to copy code'));
   };
 
-  // Ouvre la modale et stocke l'index du fragment à supprimer
+  /**
+   * Ouvre la modale de confirmation suppression
+   * et stocke l'index du fragment à supprimer.
+   * @param {number} index 
+   */
   const openDeleteModal = (index) => {
     setDeleteIndex(index);
     setModalOpen(true);
   };
 
-  // Ferme la modale et reset l'index de suppression
+  /**
+   * Ferme la modale de suppression et reset l'index de suppression.
+   */
   const closeModal = () => {
     setDeleteIndex(null);
     setModalOpen(false);
   };
 
-  // Confirme la suppression : appelle onDelete avec l'index
+  
   const confirmDelete = () => {
     if (deleteIndex !== null) {
-      onDelete(deleteIndex);
-      setActiveIndex(null); // ferme le détail affiché si ouvert
+      onDelete(deleteIndex);        // Supprime dans le parent
+      setActiveIndex(null);         // Reset fragment actif
       closeModal();
     }
   };
 
-  // Lance la navigation vers la page de création/édition, en passant les données du fragment et son index
+  /**
+   * Lance la navigation vers la page de création/édition d'un fragment.
+   * Passe dans l'état de navigation les données du fragment et son index.
+   * @param {Object} fragment Objet fragment {title, code, tag}
+   * @param {number} index Index du fragment
+   */
   const handleEdit = (fragment, index) => {
     navigate('/new', {
       state: { ...fragment, index }
     });
   };
 
+  useEffect(() => {
+    localStorage.setItem('fragments', JSON.stringify(fragments));
+  }, [fragments]);
+
   return (
     <div className="fragments-container">
       <h2>Fragments List</h2>
 
-      {/* Si pas de fragment, message utilisateur */}
+      {/* Si aucun fragment, affichage message */}
       {fragments.length === 0 ? (
         <p>No fragments yet!</p>
       ) : (
         <ul className="fragment-list">
-          {/* Parcours des fragments pour affichage */}
           {fragments.map((frag, i) => (
             <li
               key={i}
@@ -73,16 +91,16 @@ export default function Fragments({ fragments, onDelete }) {
                 {/* Titre du fragment */}
                 <strong>{frag.title}</strong>
 
-                {/* Bouton pour afficher ou cacher le détail */}
+                {/* Bouton pour afficher ou cacher le détail du fragment */}
                 <button onClick={() => setActiveIndex(activeIndex === i ? null : i)}>
                   {activeIndex === i ? 'Hide' : '👁 '}
                 </button>
               </div>
 
-              {/* Détail visible uniquement si actif */}
+              {/* Affiche le détail uniquement si ce fragment est actif */}
               {activeIndex === i && (
                 <>
-                  {/* Affichage du code formaté */}
+                  {/* Affichage du code formaté avec style */}
                   <pre
                     style={{
                       marginTop: '10px',
@@ -95,7 +113,7 @@ export default function Fragments({ fragments, onDelete }) {
                     {frag.code}
                   </pre>
 
-                  {/* Affichage optionnel du tag */}
+                  {/* Affiche un bouton tag si tag existe */}
                   {frag.tag && (
                     <button
                       className="tag-button"
@@ -106,21 +124,18 @@ export default function Fragments({ fragments, onDelete }) {
                     </button>
                   )}
 
-                  {/* Actions disponibles sur le fragment */}
+                  {/* Boutons d'actions sur le fragment */}
                   <div
                     className="fragment-actions"
                     style={{ marginTop: '10px', display: 'flex', gap: '10px' }}
                   >
-                    {/* Copier dans le presse-papier */}
                     <button onClick={() => handleCopy(frag.code)}>📋 Copy</button>
-
-                    {/* Modifier le fragment */}
                     <button onClick={() => handleEdit(frag, i)}>✏️ Edit</button>
-
-                    {/* Ouvrir modale suppression */}
                     <button onClick={() => openDeleteModal(i)}>🗑 Delete</button>
 
-                    {/* Annuler affichage détail */}
+                    {/* Bouton Info redirige vers la page d'information */}
+                    <button onClick={() => navigate('/info')}>ℹ️ Info</button>
+
                     <button onClick={() => setActiveIndex(null)}>❌ Cancel</button>
                   </div>
                 </>
@@ -137,10 +152,7 @@ export default function Fragments({ fragments, onDelete }) {
             <h3>Confirm Deletion</h3>
             <p>Are you sure you want to delete this fragment?</p>
             <div className="modal-actions">
-              {/* Annuler suppression */}
               <button className="modal-btn cancel-btn" onClick={closeModal}>No</button>
-
-              {/* Confirmer suppression */}
               <button className="modal-btn confirm-btn" onClick={confirmDelete}>Yes</button>
             </div>
           </div>

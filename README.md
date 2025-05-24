@@ -1,34 +1,36 @@
 # code-wallet
 
-An Electron application with React
+# Déploiement
 
-## Recommended IDE Setup
+## Outils recommandés  
+- Visual Studio Code  
+- hyper (si bsesoin)
 
-- [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+## Prérequis  
+- Node.js installé  
+- npm (installé avec Node.js)  
+- Git (pour cloner le projet si besoin)  
 
-## Project Setup
 
-### Install
+## Installation des dépendances  
+- Installer Electron Vite au début (si besoin)  
+- installer un router pour la navigation entre les pages
+- installer firebase pour le stockage 
 
-```bash
-$ npm install
-```
+- Dans le terminal, lancer :  
+  
+  npm install
 
-### Development
 
-```bash
-$ npm run dev
-```
+# Lancement en développement : 
 
-### Build
+npm run dev
 
-```bash
-# For windows
-$ npm run build:win
+# Packager l’application
 
-# For macOS
-$ npm run build:mac
+npm run build:win 
 
-# For Linux
-$ npm run build:linux
-```
+
+
+
+ 
